@@ -10,7 +10,10 @@ jobs:
       - name: Get code
         uses: actions/checkout@v7
       - name: Load and Cache
+        id: load-n-cache
         uses: ./.github/actions/cached-deps
+      - name: Custom cache action output info
+        run: echo "Cache used -> ${{ steps.load-n-cache.outputs.used-cache }}"
       - name: Lint code
         run: npm run lint
   test:
@@ -19,9 +22,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v7
       - name: Load and Cache
+        id: load-n-cache
         uses: ./.github/actions/cached-deps
         with:
           caching: 'false'
+      - name: Custom cache action output info
+        run: echo "Cache used -> ${{ steps.load-n-cache.outputs.used-cache }}"
       - name: Test code
         id: run-tests
         run: npm run test
