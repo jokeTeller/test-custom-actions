@@ -11,6 +11,9 @@ inputs:
   files-dir:
     description: Path to deploy
     required: true
+outputs:
+  site-url:
+    description: Website URL
 runs:
   using: node24
   main: src/main.js

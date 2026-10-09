@@ -66,6 +66,7 @@ jobs:
       - name: Output contents
         run: ls
       - name: Deploy site
+        id: deploy-site
         uses: ./.github/actions/deploy-s3-js
         with:
           bucket: node-action-demo-app
@@ -74,3 +75,5 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Get Website endpoint
+        run: echo "${{ steps.deploy-site.outputs.site-url }}"
