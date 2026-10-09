@@ -1,5 +1,16 @@
 name: Deploy to AWS S3
 description: Deploy static Website
+inputs:
+  bucket:
+    description: S3 bucket name
+    required: true
+  bucket-region:
+    description: The region of S3 bucket
+    required: false
+    default: us-east-1
+  files-dir:
+    description: Path to deploy
+    required: true
 runs:
   using: node24
   main: src/main.js
