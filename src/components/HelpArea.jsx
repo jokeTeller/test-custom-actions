@@ -1,5 +1,5 @@
-import HelpBox from './HelpBox';
-import './HelpArea.css';
+import HelpBox from './HelpBox'
+import './HelpArea.css'
 
 const HELP_ITEMS = [
   {
@@ -17,7 +17,12 @@ const HELP_ITEMS = [
     title: 'What is GitHub Actions?',
     text: 'GitHub Actions is an automation service (or CI / CD service) that helps you automate repository-related workflows and processes.',
   },
-];
+  {
+    id: 'h4',
+    title: 'How to create custom GitHub Actions?',
+    text: 'Just do it',
+  },
+]
 
 function HelpArea() {
   return (
@@ -26,7 +31,7 @@ function HelpArea() {
         <HelpBox key={item.id} title={item.title} text={item.text} />
       ))}
     </section>
-  );
+  )
 }
 
-export default HelpArea;
+export default HelpArea

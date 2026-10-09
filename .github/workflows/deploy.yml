@@ -65,9 +65,21 @@ jobs:
           path: ./dist
       - name: Output contents
         run: ls
+      # JS custom action
+      # - name: Deploy site
+      #   id: deploy-site
+      #   uses: ./.github/actions/deploy-s3-js
+      #   with:
+      #     bucket: node-action-demo-app
+      #     bucket-region: us-east-1
+      #     files-dir: ./dist
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # Docker custom action
       - name: Deploy site
         id: deploy-site
-        uses: ./.github/actions/deploy-s3-js
+        uses: ./.github/actions/deploy-s3-docker
         with:
           bucket: node-action-demo-app
           bucket-region: us-east-1
