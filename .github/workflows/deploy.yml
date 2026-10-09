@@ -53,6 +53,10 @@ jobs:
           name: dist-files
           path: dist
   deploy:
+    # Permissions for AWS OpenID connect
+    permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -77,6 +81,22 @@ jobs:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       # Docker custom action
+      # - name: Deploy site
+      #   id: deploy-site
+      #   uses: ./.github/actions/deploy-s3-docker
+      #   with:
+      #     bucket: node-action-demo-app
+      #     bucket-region: us-east-1
+      #     files-dir: ./dist
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # Docker custom action with AWS OpenID connect
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v6.2.2
+        with:
+          role-to-assume: arn:aws:iam::332053469066:role/GitHubDeploy
+          aws-region: us-east-1
       - name: Deploy site
         id: deploy-site
         uses: ./.github/actions/deploy-s3-docker
@@ -84,8 +104,5 @@ jobs:
           bucket: node-action-demo-app
           bucket-region: us-east-1
           files-dir: ./dist
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Get Website endpoint
         run: echo "${{ steps.deploy-site.outputs.site-url }}"
