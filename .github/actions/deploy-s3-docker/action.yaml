@@ -15,4 +15,5 @@ outputs:
   site-url:
     description: Website URL
 runs:
-  using: 'docker'
+  using: docker
+  image: Dockerfile
